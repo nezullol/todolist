@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List App</title>
+</head>
+<style>
+    body {
+        display: grid;
+        grid-template-columns: auto;
+        align-items: center;
+        font-size: 3em;
+        color: lightgreen;
+        text-shadow: 2px 2px 2px black;
+        background-color: gray;
+        justify-items: center;
+    }
+    .panel {
+        display: flex;
+        flex-direction: row;
+    }
+    .buttons {
+        flex-direction: column;
+        margin-left: 10px;
+    }
+    #msgBtn {
+        margin: 10px;
+    }
+    #clearBtn {
+        margin: 10px;
+    }
+
+    input {
+        margin-top: 30px;
+        text-align: center;
+        background-color: rgba(245, 245, 245, 0.342);
+        color: lightgreen;
+        font-family: monospace;
+        border-color: transparent;
+        border-radius: 6px;
+        font-size: 100px;
+        width: 99%;
+        text-shadow: 3px 3px black;
+        height: 1em;
+
+    }
+    input:focus {
+        outline: 0;
+    }
+    .chatMsg {
+        font-size: 100px;
+        text-shadow: 3px 3px black;
+        margin-left: 40%;
+
+    }
+    button#msgBtn{
+        color: lightgreen;
+        border-radius: 50em;
+        font-family: monospace;
+        font-weight: 900;
+        font-size: 1em;
+        text-shadow: 2px 2px black;
+        border-color: transparent;
+        background-color: rgba(255, 255, 255, 0.205);
+        box-shadow:2px 2px 2px 2px rgb(55, 92, 55);
+        border-style:outset;
+    }
+    button#msgBtn:focus {
+        outline: 0;
+    }
+    button#clearBtn{
+        color: lightgreen;
+        border-radius: 50em;
+        font-family: monospace;
+        font-weight: 900;
+        font-size: 1em;
+        text-shadow: 2px 2px black;
+        border-color: transparent;
+        background-color: rgba(255, 255, 255, 0.205);
+        box-shadow:2px 2px 2px 2px rgb(55, 92, 55);
+        border-style:outset;
+    }
+    button#clearBtn:focus {
+        outline: 0;
+    }
+    hr {
+    background-color:lightgreen;
+    border-color: transparent;
+    height: 5px;
+    width:50% ;
+    box-shadow:2px 2px 2px black;
+    }
+</style>
+<body>
+    <div>Todo List!</div>
+    <hr>
+    <div class="widget">
+        <div class="panel">
+            <input type="text" id="chat-input">
+            <br>
+            <div class="buttons">
+                <button id="msgBtn" onclick="sendMessage()" >Submit</button>
+                <button id="clearBtn" onclick="clearMsg()">Clear</button>
+            </div>
+        </div>
+        <div class="chat-wrapper"></div>
+    </div>
+</body>
+<script>
+    // LISTENS FOR YOU TO PRESS ENTER THEN CLICKS THE SUBMIT BUTTON
+    var input = document.getElementById('chat-input')
+    input.addEventListener("keyup", function(e) {
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            document.getElementById('msgBtn').click()
+        }
+    });
+    
+    // MAKES A NEW DIV WITH A CLASS THEN TAKES THE VALUE OF THE INPUT AND PUTS IT IN THE DIV
+    // CLEARS THE CHAT INPUT
+    // THEN WE INSERT THE NEW DIV BEFORE THE CHAT WRAPPER DIV TO PRINT IT ON THE PAGE
+    function sendMessage() {
+        const newDiv = document.createElement('div');
+        newDiv.classList.add('chatMsg');
+        let chatInput = document.querySelector('#chat-input').value;
+        const newContent = document.createTextNode(chatInput);
+        newDiv.appendChild(newContent);
+        
+        const widget = document.querySelector('.widget')
+        let chatWrapper = document.querySelector('.chat-wrapper');
+        document.querySelector('#chat-input').value = ''
+
+        // THE INDEX OF THE LATEST ELEMENT WILL ALWAYS BE ZERO WITH THIS CODE:
+
+        // if (document.querySelectorAll('.chatMsg').length > 0) {
+        //     chatWrapper = document.querySelectorAll('.chatMsg')[0];
+        // }
+
+        widget.insertBefore(newDiv, chatWrapper);
+    }
+
+    // LOOPS THROUGH ALL THE DIVS IN THE NODE LIST CALLING REMOVE ON EACH
+    // HAD TO ADD A CONSOLE CLEAR BEFORE BECAUSE WHEN WE RUN OUT OF DIVS TO REMOVE WE THROUGH A ERROR
+    // ASK MENTOR HOW TO WRITE THIS LOOP BETTER!!!!!!!!!!!!!!!!!!!!
+        const message = document.getElementsByClassName('chatMsg')
+        clearMsg = () => {
+        console.clear()
+        while (message[0] !== null) {
+            message[0].remove()
+        }
+        
+        }
+</script>
+</html>
